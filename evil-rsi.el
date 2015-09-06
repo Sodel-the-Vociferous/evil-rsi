@@ -47,6 +47,16 @@
 
 (require 'evil)
 
+(defgroup evil-rsi nil
+  "This program brings some essential `emacs` motion bindings back to evil."
+  :group 'evil)
+
+(defcustom evil-rsi-clobber-default-help-key t
+  "If non-nil, rebind C-h to `delete-backward-char' in evil insert state map."
+  :type 'boolean
+  :group 'evil-rsi)
+
+
 ;;;###autoload
 (define-minor-mode evil-rsi-mode
   "Rsi mode."
@@ -60,7 +70,8 @@
             (evil-define-key 'insert map "\C-e" 'end-of-line)
             (evil-define-key 'motion map "\C-e" 'end-of-line)
             (evil-define-key 'insert map "\C-f" 'forward-char)
-            (evil-define-key 'insert map "\C-h" 'delete-backward-char)
+            (if evil-rsi-clobber-default-help-key
+                (evil-define-key 'insert map "\C-h" 'delete-backward-char))
             (evil-define-key 'motion map "\C-k" 'kill-line)
             (evil-define-key 'insert map "\C-k" 'kill-line)
             (evil-define-key 'insert map (kbd "C-S-k") 'evil-insert-digraph)
